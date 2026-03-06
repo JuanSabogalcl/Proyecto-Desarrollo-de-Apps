@@ -1,0 +1,50 @@
+<div class="detail">
+  @if (loading()) {
+    <p class="loading">Cargando...</p>
+  } @else if (error()) {
+    <p class="error">{{ error() }}</p>
+    <a routerLink="/">Volver al listado</a>
+  } @else if (pokemon(); as p) {
+    <a class="back" routerLink="/">← Volver al listado</a>
+
+    <header class="header">
+      <span class="id">#{{ p.id }}</span>
+      <h1>{{ p.name | titlecase }}</h1>
+      <div class="types">
+        @for (type of types(); track type) {
+          <span class="type" [class]="'type-' + type">{{ type }}</span>
+        }
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="image-wrap">
+        @if (imageUrl(); as img) {
+          <img [src]="img" [alt]="p.name" />
+        }
+      </div>
+
+      <div class="info">
+        <section class="section">
+          <h2>Características</h2>
+          <ul>
+            <li><strong>Altura:</strong> {{ p.height / 10 }} m</li>
+            <li><strong>Peso:</strong> {{ p.weight / 10 }} kg</li>
+          </ul>
+        </section>
+
+        <section class="section">
+          <h2>Estadísticas base</h2>
+          <ul class="stats">
+            @for (stat of stats(); track stat.stat.name) {
+              <li>
+                <span class="stat-name">{{ stat.stat.name | titlecase }}</span>
+                <span class="stat-value">{{ stat.base_stat }}</span>
+              </li>
+            }
+          </ul>
+        </section>
+      </div>
+    </div>
+  }
+</div>

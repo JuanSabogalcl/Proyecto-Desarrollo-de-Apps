@@ -1,0 +1,20 @@
+<div class="list">
+  <h1>Lista de Pokemons</h1>
+
+  @if (loading()) {
+    <p class="loading">Cargando...</p>
+  } @else if (error()) {
+    <p class="error">{{ error() }}</p>
+  } @else {
+    <ul class="pokemon-grid">
+      @for (pokemon of pokemons(); track pokemon.name) {
+        <li>
+          <a [routerLink]="['/pokemon', getPokemonId(pokemon)]" class="card">
+            <span class="id">#{{ getPokemonId(pokemon) }}</span>
+            <span class="name">{{ pokemon.name | titlecase }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</div>
